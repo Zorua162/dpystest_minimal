@@ -5,15 +5,21 @@ import discord.ext.test as dpytest
 import pytest
 from discord.ext import commands
 import discord
+import pytest_asyncio
+from bot import Bot
+from discord.client import _LoopSentinel
 
-
-@pytest.fixture
-def bot(event_loop):
-    """Create the bot test environment to use with every test"""
-    bot = commands.Bot(
-        command_prefix="!", event_loop=event_loop, intents=discord.Intents.all()
-    )
+@pytest_asyncio.fixture
+async def bot(event_loop):
+    """Initialise bot to be able to run tests on it"""
+    # Create the bot, similar to how it is done in start_bot
+    bot = Bot(event_loop)
     bot.add_command(ping)
+
+    if isinstance(bot.loop, _LoopSentinel):
+        await bot._async_setup_hook()
+
+    # Configure the bot to be in a test environment (similar to bot.run)
     dpytest.configure(bot)
     return bot
 
