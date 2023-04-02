@@ -1,0 +1,28 @@
+# Enviroment files
+.env
+env
+.ssh/
+
+# Unncessary data files
+Config_*
+logs/*
+tags
+
+# Test files
+test.py
+testing.py
+test file.py
+update_config.py
+tests/runtestbot.bat
+dpytest_*
+
+# Code Editor Files
+.ipynb_checkpoints
+*.ipynb
+.idea/*
+.vs/*
+*@neomake*
+
+# Python Compiled files
+urmwbot/__pycache__/
+*pyc
