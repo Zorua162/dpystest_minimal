@@ -1,8 +1,8 @@
 """
 The main Urmw bot class
 """
-import sys
-import traceback
+# import sys
+# import traceback
 import logging
 
 import discord as dc
@@ -28,7 +28,6 @@ class Bot(commands.Bot):
         intents.message_content = True
         intents.presences = True
 
-
         super().__init__('?', event_loop=event_loop, intents=intents, help_command=None)
 
     def run(self):
@@ -38,3 +37,8 @@ class Bot(commands.Bot):
         # Old way of starting bot, abstracts away event loop which is needed for testing
         super().run(config("BOT_TOKEN"))
 
+    async def setup_hook(self):
+        for guild in self.guilds:
+            await guild.create_text_channel("setup_hook_channel")
+        channel = dc.utils.get(guild.channels, name="setup_hook_channel")
+        await channel.send("msg")
