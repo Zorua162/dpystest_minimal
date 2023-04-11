@@ -50,6 +50,7 @@ async def test_channel_history_simple(bot):
     await channel.send("test")
     assert len([msg async for msg in channel.history(limit=10)]) == 1
 
+
 # @pytest.mark.asyncio
 # async def test_send_command(bot):
 # async def run_command(bot, command):
@@ -57,11 +58,11 @@ async def test_channel_history_simple(bot):
 #     guild = bot.guilds[0]
 #     member1 = guild.members[0]
 #     await dpytest.message(f"!{command}", guild.channels[1], member1)
-# 
-# 
+#
+#
 # @pytest.mark.asyncio
 # async def test_ping_2(bot):
 #     """Test if the ping command works"""
 #     await run_command(bot, "ping")
 #     assert "ms" in dpytest.get_message(peek=True).content
-# 
+#
