@@ -41,4 +41,4 @@ class Bot(commands.Bot):
         for guild in self.guilds:
             await guild.create_text_channel("setup_hook_channel")
         channel = dc.utils.get(guild.channels, name="setup_hook_channel")
-        await channel.send("msg")
+        await channel.send("Message from setup hook")

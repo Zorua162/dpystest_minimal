@@ -18,6 +18,7 @@ async def bot(event_loop):
     bot.add_command(ping)
     bot.add_command(create_channel)
     bot.add_command(get_channel)
+    bot.add_command(get_channel_history)
 
     if isinstance(bot.loop, _LoopSentinel):
         await bot._async_setup_hook()
@@ -25,7 +26,7 @@ async def bot(event_loop):
     # Configure the bot to be in a test environment (similar to bot.run)
     dpytest.configure(bot)
     await bot.setup_hook()
-    assert dpytest.get_message().content == "msg"
+    assert dpytest.get_message().content == "Message from setup hook"
 
     return bot
 
@@ -57,6 +58,18 @@ async def get_channel(ctx):
         await ctx.send("got_channel")
     else:
         await ctx.send("fail the test")
+
+
+@commands.command()
+async def get_channel_history(ctx):
+    """Send message to a channel where !ping was called"""
+    await ctx.guild.create_text_channel("test_channel")
+    channel = dc.utils.get(ctx.guild.channels, name="setup_hook_channel")  # , type=dc.ChannelType.text)
+    history = [msg async for msg in channel.history(limit=10)]
+    if len(history) > 0:
+        await ctx.send("got_channel")
+    else:
+        await ctx.send("failed")
 
 
 def pytest_sessionfinish():

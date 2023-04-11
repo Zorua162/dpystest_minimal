@@ -31,6 +31,15 @@ async def test_setup_hook_was_called(bot):
     await dpytest.message("?get_channel")
     channel_names = [channel.name for channel in bot.guilds[0].channels]
     assert "setup_hook_channel" in channel_names
+    assert dpytest.verify().message().contains().content("got_channel")
+
+
+@pytest.mark.asyncio
+async def test_channel_history_flatten(bot):
+    """Test if running a command on the bot can get a channel and send a message"""
+    print(bot.guilds)
+    await dpytest.message("?get_channel_history")
+    assert dpytest.verify().message().contains().content("got_channel")
 
 # @pytest.mark.asyncio
 # async def test_send_command(bot):
