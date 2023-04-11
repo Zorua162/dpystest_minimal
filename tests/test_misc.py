@@ -41,6 +41,15 @@ async def test_channel_history_flatten(bot):
     await dpytest.message("?get_channel_history")
     assert dpytest.verify().message().contains().content("got_channel")
 
+
+@pytest.mark.asyncio
+async def test_channel_history_simple(bot):
+    """Test if running a command on the bot can get a channel and send a message"""
+    print(bot.guilds)
+    channel = bot.guilds[0].channels[0]
+    await channel.send("test")
+    assert len([msg async for msg in channel.history(limit=10)]) == 1
+
 # @pytest.mark.asyncio
 # async def test_send_command(bot):
 # async def run_command(bot, command):
